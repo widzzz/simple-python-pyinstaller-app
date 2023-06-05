@@ -2,21 +2,21 @@ node {
     stage('Build') {
         docker.image('python:2-alpine').inside {
             sh 'pwd'
-            // Perform the compilation
             sh 'python -m py_compile sources/add2vals.py sources/calc.py'
-
-            // Stash the compiled results
-            stash(name: 'compiled-results', includes: 'sources/*.py*')
         }
     }
     
     stage('Test') {
-        docker.image('python:2-alpine').inside {
-            // Retrieve the stashed files
-            unstash('compiled-results')
-
+    node {
+        docker.image('qnib/pytest').inside {
             // Perform the test
-            sh 'if [ -e "sources/calc.py" ]; then echo "Test success"; else echo "Error: calc.py does not exist" >&2; fi'
+            sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+            
+            // Archive the test results
+            archiveArtifacts 'test-reports/results.xml'
+            
+            // Publish the test results
+            junit 'test-reports/results.xml'
         }
     }
 }
