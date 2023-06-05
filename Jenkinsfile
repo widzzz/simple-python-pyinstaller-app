@@ -1,11 +1,12 @@
 node {
     stage('Build') {
         docker.image('python:2-alpine').inside {
+            sh 'echo $(pwd)'
+            sh 'echo $(ls)'
             // Copy the required files into the Docker container
             sh 'cp -r $WORKSPACE/sources .'
 
             // Perform the compilation
-            sh 'echo $(pwd)'
             sh 'python -m py_compile sources/add2vals.py sources/calc.py'
 
             // Stash the compiled results
