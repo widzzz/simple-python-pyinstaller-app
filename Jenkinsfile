@@ -4,6 +4,7 @@ node {
             sh 'pwd'
         }
     }
+    
     stage('Build') {
         docker.image('python:2-alpine').inside {
             // Perform the compilation
@@ -13,7 +14,7 @@ node {
             stash(name: 'compiled-results', includes: 'sources/*.py*')
         }
     }
-
+    
     stage('Test') {
         docker.image('python:2-alpine').inside {
             // Retrieve the stashed files
