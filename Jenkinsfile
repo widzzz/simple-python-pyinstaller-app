@@ -13,7 +13,14 @@ pipeline {
             }
         }
         stage('Test') {
-            sh 'if [ -e "sources/calc.py" ]; then echo "Test success"; else echo "Error: calc.py does not exist" >&2; fi'
+            agent {
+                docker {
+                    image 'python:2-alpine' 
+                }
+            }
+            steps {
+                sh 'if [ -e "sources/calc.py" ]; then echo "Test success"; else echo "Error: calc.py does not exist" >&2; fi'
+            }
         }
     }
 }
