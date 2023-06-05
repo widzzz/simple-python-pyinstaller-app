@@ -1,6 +1,8 @@
 node {
     setup('Check') {
-        sh 'pwd'
+        docker.image('python:2-alpine').inside {
+            sh 'pwd'
+        }
     }
     stage('Build') {
         docker.image('python:2-alpine').inside {
