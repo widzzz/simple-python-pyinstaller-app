@@ -1,12 +1,7 @@
 node {
-    setup('Setup') {
-        docker.image('python:2-alpine').inside {
-            sh 'pwd'
-        }
-    }
-    
     stage('Build') {
         docker.image('python:2-alpine').inside {
+            sh 'pwd'
             // Perform the compilation
             sh 'python -m py_compile sources/add2vals.py sources/calc.py'
 
