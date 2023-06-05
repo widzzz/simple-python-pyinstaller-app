@@ -5,6 +5,7 @@ node {
             sh 'cp -r $WORKSPACE/sources .'
 
             // Perform the compilation
+            sh 'echo $(pwd)'
             sh 'python -m py_compile sources/add2vals.py sources/calc.py'
 
             // Stash the compiled results
