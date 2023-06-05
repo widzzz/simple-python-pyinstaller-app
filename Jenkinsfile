@@ -1,9 +1,4 @@
 node {
-    stage('Setup') {
-            sh 'pwd'
-            sh 'ls'
-            sh 'ls /var/jenkins_home/workspace'
-    }
     stage('Build') {
         docker.image('python:2-alpine').inside {
             // Perform the compilation
