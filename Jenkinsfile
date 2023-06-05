@@ -1,12 +1,11 @@
 node {
-    stage('Build') {
-        docker.image('python:2-alpine').inside {
+    stage('Setup') {
             sh 'pwd'
             sh 'ls'
             sh 'ls /var/jenkins_home/workspace'
-            // Copy the required files into the Docker container
-            sh 'cp -r $WORKSPACE/sources .'
-
+    }
+    stage('Build') {
+        docker.image('python:2-alpine').inside {
             // Perform the compilation
             sh 'python -m py_compile sources/add2vals.py sources/calc.py'
 
