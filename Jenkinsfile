@@ -1,8 +1,9 @@
 node {
     stage('Build') {
         docker.image('python:2-alpine').inside {
-            sh 'echo $(pwd)'
-            sh 'echo $(ls)'
+            sh 'pwd'
+            sh 'ls'
+            sh 'ls /var/jenkins_home/workspace'
             // Copy the required files into the Docker container
             sh 'cp -r $WORKSPACE/sources .'
 
