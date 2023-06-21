@@ -36,6 +36,7 @@ pipeline {
             agent { label 'dicoding-practice' }
             steps {
                 sh 'docker run -v "$(pwd):/src/" cdrx/pyinstaller-linux'
+                sleep time: 1, unit: 'MINUTES'
             }
             post {
                 success {
