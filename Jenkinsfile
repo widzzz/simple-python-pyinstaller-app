@@ -35,8 +35,7 @@ pipeline {
             // I add the node in Jenkins
             agent { label 'dicoding-practice' }
             steps {
-                sh 'docker run --name pyinstaller-container -v "$(pwd):/sources/" cdrx/pyinstaller-linux:python2'
-                sh 'docker exec pyinstaller pyinstaller --onefile sources/add2vals.py'
+                sh 'docker run -v "$(pwd):/src/" cdrx/pyinstaller-linux'
             }
             post {
                 success {
