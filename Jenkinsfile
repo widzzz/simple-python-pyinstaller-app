@@ -32,19 +32,17 @@ pipeline {
             }
         }
         stage('Deploy') {
-            agent {
-                docker {
-                    image 'cdrx/pyinstaller-linux:python2'
+            // I add the node in Jenkins
+            agent { label 'dicoding-practice' }
+            steps {
+                sh 'docker run --name pyinstaller-container -v "$(pwd):/sources/" cdrx/pyinstaller-linux:python2'
+                sh 'docker exec pyinstaller pyinstaller --onefile sources/add2vals.py'
+            }
+            post {
+                success {
+                    archiveArtifacts 'dist/add2vals'
                 }
             }
-            steps {
-                sh 'pyinstaller --onefile sources/add2vals.py'
-            }
-            // post {
-            //     success {
-            //         archiveArtifacts 'dist/add2vals'
-            //     }
-            // }
         }
     }
 }
